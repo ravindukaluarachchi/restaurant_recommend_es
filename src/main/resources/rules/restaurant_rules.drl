@@ -1,0 +1,62 @@
+//created on: May 25, 2018
+package com.rav.rules
+
+//list any import classes here.
+import com.rav.model.Restaurant;
+
+
+//declare any global variables here
+global com.rav.model.Result result;
+global com.rav.model.Query q;
+
+
+dialect "mvel"
+/*
+query belongsTo(String x, String y)
+    Fact(x, y;)
+    or
+    (Fact(z, y;) and belongsTo(x, z;))
+end
+*/
+
+rule "rate on city"
+when
+    r :  Restaurant( city == q.getCity()) 
+then
+	r.incrementRate();  
+	r.justify("Is in " + r.getCity());
+end
+
+rule "rate on dine type"
+when
+    r : Restaurant( deliver  == q.getDeliver())
+then
+	r.incrementRate();    
+	r.justify(r.getDineType())
+end
+
+rule "rate on has food"
+when
+    r : Restaurant( items.contains(q.getItemObj()))
+then
+	r.incrementRate();  
+    r.justify("Has " + q.item);
+end
+
+
+
+/*rule "rate on has food in money range"
+when
+    r : Restaurant( items.get(items.indexOf(q.getItemObj())).price < q.maxRate)
+then
+	r.incrementRate();  
+   System.out.println(r.getName() + " has " +q.getItem());
+end*/
+
+ /*
+rule "print all facts"
+when
+    belongsTo(element, place;) and belongsTo("buriyani", place;) or belongsTo(element, "panadura";)
+then
+    result.addFact(element + " IS ELEMENT OF " + place);
+end*/
