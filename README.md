@@ -1,2 +1,5 @@
-# restaurant_recommend_es
-Expert System using Drools 7.
+# Expert System To Recommend Restaurants
+
+Created as a Msc course project for the module cognitive systems.
+
+Created using Drools 7 and jetty.
